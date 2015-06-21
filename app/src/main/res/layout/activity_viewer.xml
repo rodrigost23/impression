@@ -8,11 +8,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/overlay"
+        android:background="@drawable/viewer_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/viewer_overlay_padding"
+        android:paddingBottom="2dp">
+        <android.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize" />
+    </LinearLayout>
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/viewer_overlay"
+        android:background="@android:color/transparent"
         android:elevation="@dimen/toolbar_elevation"
         android:transitionName="Toolbar"
         app:contentInsetStart="@dimen/toolbar_inset"

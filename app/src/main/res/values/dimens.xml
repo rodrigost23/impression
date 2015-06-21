@@ -30,4 +30,6 @@
     <dimen name="breadcrumb_arrow_margin">8dp</dimen>
     <dimen name="breadcrumb_layout_margin">68dp</dimen>
 
+    <dimen name="viewer_overlay_padding">0dp</dimen>
+
 </resources>

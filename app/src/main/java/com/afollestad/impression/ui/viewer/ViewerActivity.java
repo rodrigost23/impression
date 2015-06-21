@@ -211,7 +211,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
 
                 if (!mIsReturning) {
                     int primaryColorDark = primaryColorDark();
-                    int viewerOverlayColor = getResources().getColor(R.color.viewer_overlay);
+                    int viewerOverlayColor = getResources().getColor(android.R.color.transparent);
 
                     ObjectAnimator.ofObject(mToolbar, "backgroundColor", new ArgbEvaluator(), primaryColor(), viewerOverlayColor)
                             .setDuration(duration)
@@ -505,6 +505,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        findViewById(R.id.overlay).setVisibility(View.INVISIBLE);
     }
 
     // This snippet shows the system bars. It does this by removing all the flags
@@ -514,6 +515,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        findViewById(R.id.overlay).setVisibility(View.VISIBLE);
     }
 
     private boolean systemUIFocus = false;
