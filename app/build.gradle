@@ -30,6 +30,9 @@ android {
 
     }
 
+    lintOptions {
+        abortOnError false
+    }
     defaultConfig {
         applicationId "com.afollestad.impression"
         minSdkVersion 16
