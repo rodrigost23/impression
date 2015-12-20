@@ -34,13 +34,7 @@ public class App extends Application {
                             .values(account)
                             .run();
                     currentAccount = account;
-
-                    //Workaround for ID not updated after inserting
-                    currentAccount = Inquiry.get()
-                            .selectFrom(Account.TABLE, Account.class)
-                            .one();
                     currentAccount.updateHelper();
-                    //---
 
                     PrefUtils.setCurrentAccountId(context, currentAccount.getId());
 

@@ -94,7 +94,7 @@ dependencies {
     compile 'com.android.support:palette-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
 
-    compile 'com.github.afollestad:inquiry:931c2ca150'
+    compile 'com.github.afollestad:inquiry:2.0.0'
 /*
     compile 'com.trello:rxlifecycle:0.3.1'
     compile 'com.trello:rxlifecycle-components:0.3.1'*/
