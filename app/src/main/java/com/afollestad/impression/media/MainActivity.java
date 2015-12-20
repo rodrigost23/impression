@@ -44,7 +44,7 @@ import android.widget.TextView;
 
 import com.afollestad.impression.BuildConfig;
 import com.afollestad.impression.R;
-import com.afollestad.impression.api.MediaFolderEntry;
+import com.afollestad.impression.api.LocalMediaFolderEntry;
 import com.afollestad.impression.base.ThemedActivity;
 import com.afollestad.impression.navdrawer.NavDrawerFragment;
 import com.afollestad.impression.providers.IncludedFolderProvider;
@@ -54,7 +54,6 @@ import com.afollestad.impression.utils.PrefUtils;
 import com.afollestad.impression.utils.Utils;
 import com.afollestad.impression.widget.breadcrumbs.BreadCrumbLayout;
 import com.afollestad.impression.widget.breadcrumbs.Crumb;
-import com.afollestad.inquiry.Inquiry;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
@@ -313,8 +312,6 @@ public class MainActivity extends ThemedActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Inquiry.init(this);
-
         setupSharedElementCallback();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -404,7 +401,6 @@ public class MainActivity extends ThemedActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Inquiry.deinit();
     }
 
     @Override
@@ -590,7 +586,7 @@ public class MainActivity extends ThemedActivity
     public boolean navDrawerSwitchAlbum(String path) {
         mDrawerLayout.closeDrawers();
 
-        if (path.equals(MediaFolderEntry.OVERVIEW_PATH) && PrefUtils.isExplorerMode(this)) {
+        if (path.equals(LocalMediaFolderEntry.OVERVIEW_PATH) && PrefUtils.isExplorerMode(this)) {
             path = Environment.getExternalStorageDirectory().getAbsolutePath();
         }
 
@@ -617,7 +613,7 @@ public class MainActivity extends ThemedActivity
             // Initial directory
             path = PrefUtils.isExplorerMode(this) ?
                     Environment.getExternalStorageDirectory().getAbsolutePath() :
-                    MediaFolderEntry.OVERVIEW_PATH;
+                    LocalMediaFolderEntry.OVERVIEW_PATH;
             mBreadCrumbLayout.setTopPath(path);
         }
 

@@ -19,8 +19,8 @@ public class MediaNameSorter implements Comparator<MediaEntry> {
 
     @Override
     public int compare(MediaEntry lhs, MediaEntry rhs) {
-        String right = rhs.displayName(context);
-        String left = lhs.displayName(context);
+        String right = rhs.getDisplayName(context);
+        String left = lhs.getDisplayName(context);
         if (right == null) {
             right = "";
         }

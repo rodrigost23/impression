@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.afollestad.impression.BuildConfig;
-import com.afollestad.impression.api.MediaFolderEntry;
+import com.afollestad.impression.api.LocalMediaFolderEntry;
 import com.afollestad.impression.media.MediaAdapter;
 import com.afollestad.impression.providers.base.ProviderBase;
 import com.afollestad.impression.utils.PrefUtils;
@@ -37,7 +37,7 @@ public class SortMemoryProvider extends ProviderBase {
                 if (cursor != null) {
                     while (cursor.moveToNext()) {
                         String path = cursor.getString(1);
-                        if (!path.equals(MediaFolderEntry.OVERVIEW_PATH)) {
+                        if (!path.equals(LocalMediaFolderEntry.OVERVIEW_PATH)) {
                             final File fi = new File(path);
                             if (!fi.exists()) {
                                 r.delete(CONTENT_URI, "path = ?", new String[]{path});

@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.impression.R;
-import com.afollestad.impression.api.MediaFolderEntry;
+import com.afollestad.impression.api.LocalMediaFolderEntry;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -219,8 +219,8 @@ public class BreadCrumbLayout extends HorizontalScrollView implements View.OnCli
 
             //TODO: figure out what to do with this for explorer mode
             if (!isTopPath(crumb.getPath())) {
-                if (mTopPath.equals(MediaFolderEntry.OVERVIEW_PATH)) {
-                    newPathSet.add(0, MediaFolderEntry.OVERVIEW_PATH);
+                if (mTopPath.equals(LocalMediaFolderEntry.OVERVIEW_PATH)) {
+                    newPathSet.add(0, LocalMediaFolderEntry.OVERVIEW_PATH);
                 } else {
                     File file = new File(crumb.getPath());
                     while ((file = file.getParentFile()) != null) {

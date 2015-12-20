@@ -543,7 +543,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
                     final List<MediaEntry> brothers = null/*Utils.getEntriesFromFolder(this, file.getParentFile(), false, false, MediaAdapter.FileFilterMode.FILTER_ALL)*/;
                     entries.addAll(brothers);
                     for (int i = 0; i < brothers.size(); i++) {
-                        if (brothers.get(i).data().equals(file.getAbsolutePath())) {
+                        if (brothers.get(i).getData().equals(file.getAbsolutePath())) {
                             mCurrentPosition = i;
                             dontSetPos = true;
                             break;
@@ -569,7 +569,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
                     final List<MediaEntry> brothers = null/*Utils.getEntriesFromFolder(this, file.getParentFile(), false, false, MediaAdapter.FileFilterMode.FILTER_ALL)*/;
                     entries.addAll(brothers);
                     for (int i = 0; i < brothers.size(); i++) {
-                        if (brothers.get(i).data().equals(file.getAbsolutePath())) {
+                        if (brothers.get(i).getData().equals(file.getAbsolutePath())) {
                             mCurrentPosition = i;
                             dontSetPos = true;
                             break;
@@ -763,7 +763,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
     }
 
     private Uri getCurrentUri() {
-        return Uri.fromFile(new File(mAdapter.getEntries().get(mCurrentPosition).data()));
+        return Uri.fromFile(new File(mAdapter.getEntries().get(mCurrentPosition).getData()));
     }
 
     @Override
@@ -826,9 +826,10 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
             return true;
         } else if (item.getItemId() == R.id.set_as) {
             try {
-                startActivity(new Intent(Intent.ACTION_ATTACH_DATA)
+                Intent intent = new Intent(Intent.ACTION_ATTACH_DATA)
                         .setDataAndType(getCurrentUri(), "image/*")
-                        .putExtra("mimeType", "image/*"));
+                        .putExtra("mimeType", "image/*");
+                startActivity(Intent.createChooser(intent, getString(R.string.set_as)));
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(getApplicationContext(), R.string.no_app_complete_action, Toast.LENGTH_SHORT).show();
             }
@@ -839,7 +840,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
 //                public void run() {
             PrintHelper photoPrinter = new PrintHelper(ViewerActivity.this);
             photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
-            final File currentFile = new File(mAdapter.getEntries().get(mCurrentPosition).data());
+            final File currentFile = new File(mAdapter.getEntries().get(mCurrentPosition).getData());
             Bitmap bitmap = loadBitmap(currentFile);
             photoPrinter.printBitmap(currentFile.getName(), bitmap);
 //                    bitmap.recycle();
@@ -847,9 +848,9 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
 //            }).start();
         } else if (item.getItemId() == R.id.details) {
             final MediaEntry entry = mAdapter.getEntries().get(mCurrentPosition);
-            final File file = new File(entry.data());
+            final File file = new File(entry.getData());
             final Calendar cal = new GregorianCalendar();
-            cal.setTimeInMillis(entry.dateTaken());
+            cal.setTimeInMillis(entry.getDateTaken());
             new MaterialDialog.Builder(this)
                     .title(R.string.details)
                     .content(Html.fromHtml(getString(R.string.details_contents,
@@ -1054,7 +1055,7 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
             }
             return new Uri[]{
                     Utils.getImageContentUri(ViewerActivity.this,
-                            new File(mAdapter.getEntries().get(mCurrentPosition).data()))
+                            new File(mAdapter.getEntries().get(mCurrentPosition).getData()))
             };
         }
     }

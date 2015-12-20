@@ -17,12 +17,12 @@ public class MediaTakenSorter implements Comparator<MediaEntry> {
         Long right;
         Long left;
         if (rhs != null) {
-            right = rhs.dateTaken();
+            right = rhs.getDateTaken();
         } else {
             right = 0L;
         }
         if (lhs != null) {
-            left = lhs.dateTaken();
+            left = lhs.getDateTaken();
         } else {
             left = 0L;
         }

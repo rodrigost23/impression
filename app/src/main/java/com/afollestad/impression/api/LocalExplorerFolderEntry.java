@@ -9,34 +9,35 @@ import com.afollestad.impression.R;
 
 import java.io.File;
 
-public class ExplorerFolderEntry implements MediaEntry {
+public class LocalExplorerFolderEntry implements MediaEntry {
 
     private File mFile;
 
-    public ExplorerFolderEntry() {
+    public LocalExplorerFolderEntry() {
+
     }
 
-    public ExplorerFolderEntry(File file) {
+    public LocalExplorerFolderEntry(File file) {
         mFile = file;
     }
 
     @Override
-    public long id() {
+    public long getId() {
         return mFile.hashCode();
     }
 
     @Override
-    public String data() {
+    public String getData() {
         return mFile.getAbsolutePath();
     }
 
     @Override
-    public long size() {
+    public long getSize() {
         return mFile.listFiles().length;
     }
 
     @Override
-    public String displayName(Context context) {
+    public String getDisplayName(Context context) {
         if (mFile.equals(Environment.getExternalStorageDirectory().getAbsoluteFile())) {
             return context.getString(R.string.internal_storage);
         }
@@ -44,32 +45,22 @@ public class ExplorerFolderEntry implements MediaEntry {
     }
 
     @Override
-    public String mimeType() {
+    public String getMimeType() {
         return "";
     }
 
     @Override
-    public long dateTaken() {
+    public long getDateTaken() {
         return -1;
     }
 
     @Override
-    public String bucketDisplayName() {
-        return mFile.getName();
-    }
-
-    @Override
-    public String bucketId() {
-        return "";
-    }
-
-    @Override
-    public int width() {
+    public int getWidth() {
         return -1;
     }
 
     @Override
-    public int height() {
+    public int getHeight() {
         return -1;
     }
 

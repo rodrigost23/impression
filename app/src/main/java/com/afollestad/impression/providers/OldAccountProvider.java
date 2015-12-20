@@ -6,20 +6,18 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.afollestad.impression.BuildConfig;
-import com.afollestad.impression.accounts.GoogleDriveAccount;
-import com.afollestad.impression.accounts.LocalAccount;
-import com.afollestad.impression.accounts.base.Account;
+import com.afollestad.impression.accounts.Account;
 import com.afollestad.impression.providers.base.ProviderBase;
 
 /**
  * @author Shirwa Mohamed (shirwaM)
  */
-public class AccountProvider extends ProviderBase {
+public abstract class OldAccountProvider extends ProviderBase {
 
     public final static Uri CONTENT_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID + ".accounts");
     private final static String COLUMNS = "_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, type INTEGER";
 
-    public AccountProvider() {
+    public OldAccountProvider() {
         super("account", COLUMNS);
     }
 
@@ -31,20 +29,14 @@ public class AccountProvider extends ProviderBase {
         Cursor cursor = context.getContentResolver().query(CONTENT_URI, null, null, null, null);
         cursor.moveToLast();
         int id = cursor.getInt(0);
-        Account acc;
+        Account acc = null;
         switch (type) {
-            default:
-                acc = new LocalAccount(context, id);
-                break;
-            case Account.TYPE_GOOGLE_DRIVE:
-                acc = new GoogleDriveAccount(context, name, id);
-                break;
         }
         cursor.close();
         return acc;
     }
 
     public static void remove(Context context, Account account) {
-        context.getContentResolver().delete(CONTENT_URI, "_id = " + account.id(), null);
+        context.getContentResolver().delete(CONTENT_URI, "_id = " + account.getId(), null);
     }
 }

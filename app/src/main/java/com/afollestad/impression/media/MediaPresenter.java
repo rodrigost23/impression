@@ -21,9 +21,9 @@ import android.view.View;
 import com.afollestad.impression.App;
 import com.afollestad.impression.MvpPresenter;
 import com.afollestad.impression.R;
-import com.afollestad.impression.accounts.base.Account;
+import com.afollestad.impression.accounts.Account;
+import com.afollestad.impression.api.LocalMediaFolderEntry;
 import com.afollestad.impression.api.MediaEntry;
-import com.afollestad.impression.api.MediaFolderEntry;
 import com.afollestad.impression.providers.SortMemoryProvider;
 import com.afollestad.impression.utils.PrefUtils;
 import com.afollestad.impression.utils.Utils;
@@ -243,7 +243,7 @@ public class MediaPresenter extends MvpPresenter<MediaView> {
         if (PrefUtils.isExplorerMode(getView().getContextCompat())) {
             // In explorer mode, the path is displayed in the bread crumbs so the name is shown instead
             title = getView().getContextCompat().getString(R.string.app_name);
-        } else if (mPath == null || mPath.equals(MediaFolderEntry.OVERVIEW_PATH)) {
+        } else if (mPath == null || mPath.equals(LocalMediaFolderEntry.OVERVIEW_PATH)) {
             title = getView().getContextCompat().getString(R.string.overview);
         } else if (mPath.equals(Environment.getExternalStorageDirectory().getAbsolutePath())) {
             title = getView().getContextCompat().getString(R.string.internal_storage);
@@ -290,10 +290,11 @@ public class MediaPresenter extends MvpPresenter<MediaView> {
                     public Single<List<MediaEntry>> call(Account account) {
                         //if (!isAdded()) return null;
                         if (account != null) {
-                            return account.getEntries(getPath(),
+                            return account.getEntries(getView().getContextCompat(),
+                                    getPath(),
                                     PrefUtils.isExplorerMode(getView().getContextCompat()),
-                                    PrefUtils.getFilterMode(getView().getContextCompat()),
-                                    SortMemoryProvider.getSortMode(getView().getContextCompat(), getPath()));
+                                    SortMemoryProvider.getSortMode(getView().getContextCompat(), getPath()),
+                                    PrefUtils.getFilterMode(getView().getContextCompat()));
                         }
                         return null;
                     }
@@ -353,7 +354,6 @@ public class MediaPresenter extends MvpPresenter<MediaView> {
 
                     @Override
                     public void onError(Throwable error) {
-                        error.printStackTrace();
                         if (getView().getContextCompat() == null) {
                             return;
                         }
@@ -422,10 +422,10 @@ public class MediaPresenter extends MvpPresenter<MediaView> {
 
             if (act.isPickMode() || act.isSelectAlbumMode()) {
                 if (pic.isFolder()) {
-                    act.switchAlbum(pic.data());
+                    act.switchAlbum(pic.getData());
                 } else {
                     // This will never be called for album selection mode, only pick mode
-                    final File file = new File(pic.data());
+                    final File file = new File(pic.getData());
                     final Uri uri = Utils.getImageContentUri(act, file);
                     act.setResult(Activity.RESULT_OK, new Intent().setData(uri));
                     act.finish();
@@ -445,7 +445,7 @@ public class MediaPresenter extends MvpPresenter<MediaView> {
                     act.getMediaCab().toggleEntry(pic);
                 } else {
                     if (pic.isFolder()) {
-                        act.switchAlbum(pic.data());
+                        act.switchAlbum(pic.getData());
                     } else {
                         ImpressionThumbnailImageView iv = (ImpressionThumbnailImageView) view.findViewById(R.id.image);
                         int width = iv.getWidth();

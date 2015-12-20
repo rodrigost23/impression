@@ -7,31 +7,27 @@ import java.io.Serializable;
 
 public interface MediaEntry extends Serializable {
 
-    long id();
+    long getId();
 
-    String data();
+    String getData();
 
-    long size();
+    long getSize();
 
     /*String title();*/
 
-    String displayName(Context context);
+    String getDisplayName(Context context);
 
-    String mimeType();
+    String getMimeType();
 
     /*long dateAdded();*/
 
     /*long dateModified();*/
 
-    long dateTaken();
+    long getDateTaken();
 
-    String bucketDisplayName();
+    int getWidth();
 
-    String bucketId();
-
-    int width();
-
-    int height();
+    int getHeight();
 
     boolean isVideo();
 

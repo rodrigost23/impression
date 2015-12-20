@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 
 import com.afollestad.impression.R;
-import com.afollestad.impression.api.ExplorerFolderEntry;
+import com.afollestad.impression.api.LocalExplorerFolderEntry;
 import com.afollestad.impression.api.MediaEntry;
 import com.afollestad.impression.media.MediaAdapter;
 import com.afollestad.impression.providers.ExcludedFolderProvider;
@@ -111,6 +111,7 @@ public abstract class Utils {
     }
 
     public static void showErrorDialog(Context context, Throwable e) {
+        e.printStackTrace();
         try {
             new MaterialDialog.Builder(context)
                     .title(R.string.error)
@@ -156,7 +157,7 @@ public abstract class Utils {
                         continue;
                     }
 
-                    results.add(new ExplorerFolderEntry(fi));
+                    results.add(new LocalExplorerFolderEntry(fi));
                 }
             }
         }

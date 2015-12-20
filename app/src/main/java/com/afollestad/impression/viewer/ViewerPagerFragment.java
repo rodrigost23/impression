@@ -202,7 +202,7 @@ public class ViewerPagerFragment extends Fragment {
     private boolean isGif() {
         String ext;
         if (mEntry != null) {
-            ext = Utils.getExtension(mEntry.data());
+            ext = Utils.getExtension(mEntry.getData());
         } else {
             ext = Utils.getExtension(mMediaPath);
         }
@@ -219,7 +219,7 @@ public class ViewerPagerFragment extends Fragment {
                 uri = Uri.parse(((VideoEntry) mEntry).originalUri);
             }*/
             if (uri == null) {
-                uri = Uri.fromFile(new File(mEntry.data()));
+                uri = Uri.fromFile(new File(mEntry.getData()));
             }
         } else {
             uri = Uri.fromFile(new File(mMediaPath));
@@ -231,7 +231,7 @@ public class ViewerPagerFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (mIsVideo) {
-            if ((mEntry == null || mEntry.data() == null) && mMediaPath == null) {
+            if ((mEntry == null || mEntry.getData() == null) && mMediaPath == null) {
                 return;
             }
             mVideoView.setVideoURI(getUri());
@@ -270,7 +270,7 @@ public class ViewerPagerFragment extends Fragment {
     }
 
     private void loadThumbAndFullIfCurrent() {
-        if ((mEntry == null || mEntry.data() == null || mEntry.data().trim().isEmpty()) &&
+        if ((mEntry == null || mEntry.getData() == null || mEntry.getData().trim().isEmpty()) &&
                 (mMediaPath == null || mMediaPath.trim().isEmpty())) {
             Utils.showErrorDialog(getActivity(), new Exception(getString(R.string.invalid_file_path_error)));
             return;
@@ -527,7 +527,7 @@ public class ViewerPagerFragment extends Fragment {
     }
 
     private void loadVideo() {
-        if ((mEntry == null || mEntry.data() == null || mEntry.data().trim().isEmpty()) &&
+        if ((mEntry == null || mEntry.getData() == null || mEntry.getData().trim().isEmpty()) &&
                 (mMediaPath == null || mMediaPath.trim().isEmpty())) {
             Utils.showErrorDialog(getActivity(), new Exception(getString(R.string.invalid_file_path_error)));
             return;

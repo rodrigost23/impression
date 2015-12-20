@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.impression.R;
-import com.afollestad.impression.accounts.base.Account;
-import com.afollestad.impression.api.MediaFolderEntry;
+import com.afollestad.impression.accounts.Account;
+import com.afollestad.impression.api.LocalMediaFolderEntry;
 import com.afollestad.impression.base.ThemedActivity;
 import com.afollestad.impression.utils.Utils;
 
@@ -51,7 +51,7 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.View
     private final List<Account> mAccounts;
     private final Callback mCallback;
     private long mCheckedId;
-    private int mCurrentAccountId;
+    private long mCurrentAccountId;
     private boolean mShowingAccounts;
 
 
@@ -150,13 +150,13 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.View
         mAccounts.addAll(accounts);
     }
 
-    public void setCurrentAccountId(int currentAccountId) {
+    public void setCurrentAccountId(long currentAccountId) {
         mCurrentAccountId = currentAccountId;
     }
 
     public Account getCurrentAccount() {
         for (Account account : mAccounts) {
-            if (account.id() == mCurrentAccountId) {
+            if (account.getId() == mCurrentAccountId) {
                 return account;
             }
         }
@@ -266,7 +266,7 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.View
         } else if (mShowingAccounts) {
             position = position - 1;
             if (position < mAccounts.size()) {
-                return mAccounts.get(position).id();
+                return mAccounts.get(position).getId();
             } else {
                 return ADD_ACCOUNT_ID;
             }
@@ -301,7 +301,7 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.View
         }
 
         public String getName(Context context) {
-            if (mPath.equals(MediaFolderEntry.OVERVIEW_PATH)) {
+            if (mPath.equals(LocalMediaFolderEntry.OVERVIEW_PATH)) {
                 return context.getString(R.string.overview);
             } else if (mPath.equals(Environment.getExternalStorageDirectory().getAbsolutePath())) {
                 return context.getString(R.string.internal_storage);
@@ -333,9 +333,9 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.View
     private class NavDrawerSorter implements Comparator<Entry> {
         @Override
         public int compare(Entry lhs, Entry rhs) {
-            if (lhs.getPath().equals(MediaFolderEntry.OVERVIEW_PATH)) {
+            if (lhs.getPath().equals(LocalMediaFolderEntry.OVERVIEW_PATH)) {
                 return -1;
-            } else if (rhs.getPath().equals(MediaFolderEntry.OVERVIEW_PATH)) {
+            } else if (rhs.getPath().equals(LocalMediaFolderEntry.OVERVIEW_PATH)) {
                 return 1;
             } else {
                 return lhs.getName(mContext).compareTo(rhs.getName(mContext));

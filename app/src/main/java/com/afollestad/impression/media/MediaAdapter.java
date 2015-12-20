@@ -82,22 +82,22 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
 
     public void setItemChecked(MediaEntry entry, boolean checked) {
         if (checked) {
-            if (!mCheckedPaths.contains(entry.data())) {
-                mCheckedPaths.add(entry.data());
+            if (!mCheckedPaths.contains(entry.getData())) {
+                mCheckedPaths.add(entry.getData());
             }
             for (int i = 0; i < mEntries.size(); i++) {
-                if (mEntries.get(i).data() != null &&
-                        mEntries.get(i).data().equals(entry.data())) {
+                if (mEntries.get(i).getData() != null &&
+                        mEntries.get(i).getData().equals(entry.getData())) {
                     notifyItemChanged(i, ACTIVATION_UPDATE);
                     break;
                 }
             }
         } else {
-            if (mCheckedPaths.contains(entry.data())) {
-                mCheckedPaths.remove(entry.data());
+            if (mCheckedPaths.contains(entry.getData())) {
+                mCheckedPaths.remove(entry.getData());
             }
             for (int i = 0; i < mEntries.size(); i++) {
-                if (mEntries.get(i).data().equals(entry.data())) {
+                if (mEntries.get(i).getData().equals(entry.getData())) {
                     notifyItemChanged(i, ACTIVATION_UPDATE);
                     break;
                 }
@@ -108,7 +108,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
     public void clearChecked() {
         for (int i = 0; i < mEntries.size(); i++) {
             for (String path : mCheckedPaths) {
-                if (mEntries.get(i).data().equals(path)) {
+                if (mEntries.get(i).getData().equals(path)) {
                     notifyItemChanged(i, ACTIVATION_UPDATE);
                     break;
                 }
@@ -119,7 +119,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
 
     @Override
     public long getItemId(int position) {
-        return mEntries.get(position).id();
+        return mEntries.get(position).getId();
     }
 
     public void clear() {
@@ -194,7 +194,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
             super.onBindViewHolder(holder, position, payloads);
         } else {
             if (payloads.contains(ACTIVATION_UPDATE)) {
-                holder.view.setActivated(mCheckedPaths.contains(mEntries.get(position).data()));
+                holder.view.setActivated(mCheckedPaths.contains(mEntries.get(position).getData()));
             }
         }
     }
@@ -204,7 +204,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         MediaEntry entry = mEntries.get(position);
 
         if (!mSelectAlbumMode || (entry.isFolder()/*|| entry.isAlbum()*/)) {
-            holder.view.setActivated(mCheckedPaths.contains(entry.data()));
+            holder.view.setActivated(mCheckedPaths.contains(entry.getData()));
             if (!mSelectAlbumMode) {
                 holder.view.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -234,8 +234,8 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
 
         if (entry.isFolder() && !mExplorerMode) {
             holder.titleFrame.setVisibility(View.VISIBLE);
-            holder.title.setText(entry.displayName(mContext));
-            if (entry.data() == null) {
+            holder.title.setText(entry.getDisplayName(mContext));
+            if (entry.getData() == null) {
                 holder.image.setBackgroundColor(mEmptyImageBackground);
                 if (holder.subTitle != null) {
                     holder.subTitle.setText("0");
@@ -252,7 +252,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         } else if (entry.isFolder() && mExplorerMode) {
             holder.image.setBackgroundColor(mEmptyImageBackground);
             holder.titleFrame.setVisibility(View.VISIBLE);
-            holder.title.setText(entry.displayName(mContext));
+            holder.title.setText(entry.getDisplayName(mContext));
             if (holder.imageProgress != null) {
                 holder.imageProgress.setVisibility(View.GONE);
             }
@@ -271,10 +271,10 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
                 holder.titleFrame.setVisibility(View.GONE);
             } else {
                 holder.titleFrame.setVisibility(View.VISIBLE);
-                holder.title.setText(entry.displayName(mContext));
+                holder.title.setText(entry.getDisplayName(mContext));
                 if (holder.subTitle != null) {
                     holder.subTitle.setVisibility(View.VISIBLE);
-                    holder.subTitle.setText(entry.mimeType());
+                    holder.subTitle.setText(entry.getMimeType());
                 }
             }
             holder.image.load(entry, holder.imageProgress);

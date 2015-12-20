@@ -17,8 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.afollestad.impression.R;
+import com.afollestad.impression.api.LocalMediaFolderEntry;
 import com.afollestad.impression.api.MediaEntry;
-import com.afollestad.impression.api.MediaFolderEntry;
 import com.afollestad.impression.utils.Utils;
 import com.afollestad.impression.viewer.KeepRatio;
 import com.bumptech.glide.Glide;
@@ -80,11 +80,11 @@ public class ImpressionThumbnailImageView extends ImageView {
         if (mProgress != null && mProgress.get() != null) {
             mProgress.get().setVisibility(View.VISIBLE);
         }
-        String pathToLoad = entry.data();
-        if (entry.isFolder() && entry instanceof MediaFolderEntry) {
-            pathToLoad = ((MediaFolderEntry) entry).firstPath();
+        String pathToLoad = entry.getData();
+        if (entry.isFolder() && entry instanceof LocalMediaFolderEntry) {
+            pathToLoad = ((LocalMediaFolderEntry) entry).firstData();
         }
-        String ext = Utils.getExtension(entry.data());
+        String ext = Utils.getExtension(entry.getData());
         mIsGif = ext != null && ext.equalsIgnoreCase("gif");
 
         mBadgeDrawable = new BadgeDrawable(getContext(), mIsGif ? "GIF" : getContext().getString(R.string.video), Color.WHITE);

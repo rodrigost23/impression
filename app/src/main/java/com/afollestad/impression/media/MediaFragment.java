@@ -23,8 +23,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.afollestad.impression.R;
+import com.afollestad.impression.api.LocalMediaFolderEntry;
 import com.afollestad.impression.api.MediaEntry;
-import com.afollestad.impression.api.MediaFolderEntry;
 import com.afollestad.impression.base.ThemedActivity;
 import com.afollestad.impression.utils.PrefUtils;
 import com.afollestad.impression.widget.breadcrumbs.Crumb;
@@ -349,7 +349,7 @@ public class MediaFragment extends Fragment implements MediaView {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_media, menu);
         if (getActivity() != null) {
-            boolean isMain = mPresenter.getPath() == null || mPresenter.getPath().equals(MediaFolderEntry.OVERVIEW_PATH);
+            boolean isMain = mPresenter.getPath() == null || mPresenter.getPath().equals(LocalMediaFolderEntry.OVERVIEW_PATH);
             boolean isAlbumSelect = ((MainActivity) getActivity()).isSelectAlbumMode();
             menu.findItem(R.id.choose).setVisible(!isMain && isAlbumSelect);
             menu.findItem(R.id.viewMode).setVisible(!isAlbumSelect);

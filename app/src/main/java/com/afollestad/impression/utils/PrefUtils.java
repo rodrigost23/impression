@@ -23,7 +23,7 @@ public abstract class PrefUtils {
     public static final String OVERVIEW_MODE = "overview_mode";
     public static final String FILTER_MODE = "filter_mode";
     public static final String INCLUDE_SUBFOLDERS = "include_subfolders";
-    public static final String ACTIVE_ACCOUNT_ID = "active_account";
+    public static final String CURRENT_ACCOUNT_ID = "current_account";
     public static final String SORT_MODE = "sort_mode";
     public static final String PRIMARY_COLOR_PREFIX = "primary_color";
     public static final String ACCENT_COLOR_PREFIX = "accent_color";
@@ -90,12 +90,12 @@ public abstract class PrefUtils {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(INCLUDE_SUBFOLDERS, true);
     }
 
-    public static int getActiveAccountId(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(ACTIVE_ACCOUNT_ID, -1);
+    public static long getCurrentAccountId(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getLong(CURRENT_ACCOUNT_ID, -1);
     }
 
-    public static void setActiveAccountId(Context context, int accountId) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(ACTIVE_ACCOUNT_ID, accountId).apply();
+    public static void setCurrentAccountId(Context context, long accountId) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(CURRENT_ACCOUNT_ID, accountId).apply();
     }
 
     /**

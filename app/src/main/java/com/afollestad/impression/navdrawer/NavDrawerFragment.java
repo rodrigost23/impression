@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,16 +24,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.afollestad.impression.App;
 import com.afollestad.impression.R;
-import com.afollestad.impression.accounts.base.Account;
+import com.afollestad.impression.accounts.Account;
+import com.afollestad.impression.api.LocalMediaFolderEntry;
 import com.afollestad.impression.api.MediaFolderEntry;
 import com.afollestad.impression.base.ThemedActivity;
 import com.afollestad.impression.media.MainActivity;
 import com.afollestad.impression.media.MediaAdapter;
-import com.afollestad.impression.providers.AccountProvider;
 import com.afollestad.impression.providers.ExcludedFolderProvider;
-import com.afollestad.impression.utils.PrefUtils;
 import com.afollestad.impression.utils.Utils;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -42,14 +44,14 @@ import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Set;
 
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class NavDrawerFragment extends Fragment implements NavDrawerAdapter.Callback {
@@ -327,64 +329,51 @@ public class NavDrawerFragment extends Fragment implements NavDrawerAdapter.Call
             return;
         }
 
-        final List<Account> allAccounts = new ArrayList<>();
-
-        int currentAccountId = PrefUtils.getActiveAccountId(getActivity());
-
-        if (currentAccountId == -1) {
-            Account acc = AccountProvider.add(getActivity(), null, Account.TYPE_LOCAL);
-            allAccounts.add(acc);
-            PrefUtils.setActiveAccountId(getActivity(), acc.id());
-            currentAccountId = acc.id();
+        if (instanceState != null) {
+            mAdapter.restoreInstanceState(instanceState);
         }
 
-        mAdapter.setCurrentAccountId(currentAccountId);
-
-        final int fCurrentAccountId = currentAccountId;
-        Account.getAll(getActivity())
+        App.getCurrentAccount(getActivity())
+                .doOnSuccess(new Action1<Account>() {
+                    @Override
+                    public void call(Account account) {
+                        mAdapter.setCurrentAccountId(account.getId());
+                        loadMediaFolders(account);
+                    }
+                })
+                .flatMap(new Func1<Account, Single<Account[]>>() {
+                    @Override
+                    public Single<Account[]> call(Account account) {
+                        return App.getAllAccounts();
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Account[]>() {
                     @Override
                     public void call(Account[] accounts) {
-                        if (accounts == null || !isAdded()) {
-                            return;
-                        }
-                        for (Account a : accounts) {
-                            allAccounts.add(a);
-                            boolean selected = a.id() == fCurrentAccountId;
-                            if (selected) {
-                                loadMediaFolders(a);
-                            }
-                        }
-                        mAdapter.setAccounts(allAccounts);
-
-                        if (instanceState != null) {
-                            mAdapter.restoreInstanceState(instanceState);
-                        }
+                        mAdapter.setAccounts(Arrays.asList(accounts));
                     }
                 });
+
     }
 
     public void loadMediaFolders(final Account account) {
-        /*if (account != null) {
-            mCurrentAccount = account;
-        }*/
         mAdapter.clear();
-        mAdapter.add(new NavDrawerAdapter.Entry(MediaFolderEntry.OVERVIEW_PATH, NavDrawerAdapter.OVERVIEW_ID));
+        mAdapter.add(new NavDrawerAdapter.Entry(LocalMediaFolderEntry.OVERVIEW_PATH, NavDrawerAdapter.OVERVIEW_ID));
 
-        account.getMediaFolders(MediaAdapter.SORT_NAME_DESC, MediaAdapter.FILTER_ALL)
+        account.getMediaFolders(getActivity(), MediaAdapter.SORT_NAME_DESC, MediaAdapter.FILTER_ALL)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleSubscriber<Set<MediaFolderEntry>>() {
+                .subscribe(new SingleSubscriber<Set<? extends MediaFolderEntry>>() {
                     @Override
-                    public void onSuccess(Set<MediaFolderEntry> folderEntries) {
+                    public void onSuccess(Set<? extends MediaFolderEntry> folderEntries) {
                         for (MediaFolderEntry f : folderEntries) {
-                            mAdapter.add(new NavDrawerAdapter.Entry(f.data(), f.id()));
+                            mAdapter.add(new NavDrawerAdapter.Entry(f.getData(), f.getId()));
                         }
-                        if (account.supportsIncludedFolders()) {
+                        /*if (account.supportsIncludedFolders()) {
                             loadIncludedFolders();
-                        } else {
+                        } else {*/
                             mAdapter.notifyDataSetChangedAndSort();
-                        }
+                        /*}*/
                     }
 
                     @Override
@@ -463,9 +452,9 @@ public class NavDrawerFragment extends Fragment implements NavDrawerAdapter.Call
                     .content(Html.fromHtml(getString(R.string.confirm_exclude_album, entry.getPath())))
                     .positiveText(R.string.yes)
                     .negativeText(R.string.no)
-                    .callback(new MaterialDialog.ButtonCallback() {
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onPositive(MaterialDialog materialDialog) {
+                        public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction action) {
 
                             ExcludedFolderProvider.add(getActivity(), entry.getPath());
                             mAdapter.removeMediaEntry(index);
@@ -474,7 +463,6 @@ public class NavDrawerFragment extends Fragment implements NavDrawerAdapter.Call
                                 return;
                             }
                             MainActivity act = (MainActivity) getActivity();
-                                /*act.notifyFoldersChanged();*/
 
                             NavDrawerAdapter.Entry newPath = mAdapter.getSelectedEntry();
                             act.navDrawerSwitchAlbum(newPath.getPath());

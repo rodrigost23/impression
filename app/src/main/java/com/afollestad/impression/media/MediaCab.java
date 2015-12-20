@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.afollestad.impression.App;
 import com.afollestad.impression.R;
-import com.afollestad.impression.accounts.base.Account;
+import com.afollestad.impression.accounts.Account;
 import com.afollestad.impression.api.MediaEntry;
 import com.afollestad.impression.providers.ExcludedFolderProvider;
 import com.afollestad.impression.utils.PrefUtils;
@@ -128,7 +128,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
         if (mMediaEntries.size() == 0) {
             finish();
         } else if (mMediaEntries.size() == 1) {
-            mCab.setTitle(mMediaEntries.get(0).displayName(mContext));
+            mCab.setTitle(mMediaEntries.get(0).getDisplayName(mContext));
         } else {
             mCab.setTitle(mMediaEntries.size() + "");
         }
@@ -148,7 +148,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
     private void toggleEntry(MediaEntry p, boolean forceCheckOn) {
         boolean found = false;
         for (int i = 0; i < mMediaEntries.size(); i++) {
-            if (mMediaEntries.get(i).data().equals(p.data())) {
+            if (mMediaEntries.get(i).getData().equals(p.getData())) {
                 if (!forceCheckOn) {
                     mMediaEntries.remove(i);
                 }
@@ -193,7 +193,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                     if (!mDialog.isShowing()) {
                         break;
                     }
-                    ExcludedFolderProvider.add(mContext, e.data());
+                    ExcludedFolderProvider.add(mContext, e.getData());
                     mDialog.setProgress(mDialog.getProgress() + 1);
                 }
                 mContext.runOnUiThread(new Runnable() {
@@ -220,7 +220,8 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                             @Override
                             public Single<List<MediaEntry>> call(Account account) {
                                 //noinspection ResourceType
-                                return account.getEntries(e.data(),
+                                return account.getEntries(mContext,
+                                        e.getData(),
                                         PrefUtils.isExplorerMode(mContext),
                                         PrefUtils.getFilterMode(mContext),
                                         -1);
@@ -245,7 +246,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                                 try {
                                     Intent intent = new Intent(Intent.ACTION_SEND)
                                             .setType(mime)
-                                            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(toSend.get(0).data())));
+                                            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(toSend.get(0).getData())));
                                     mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.share_using)));
                                 } catch (ActivityNotFoundException e) {
                                     Toast.makeText(mContext, R.string.no_app_complete_action, Toast.LENGTH_SHORT).show();
@@ -257,7 +258,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                                 for (MediaEntry p : toSend) {
                                     foundPhotos = foundPhotos || !p.isVideo();
                                     foundVideos = foundVideos || p.isVideo();
-                                    uris.add(Uri.fromFile(new File(p.data())));
+                                    uris.add(Uri.fromFile(new File(p.getData())));
                                 }
                                 String mime = "*/*";
                                 if (foundPhotos && !foundVideos) {
@@ -339,7 +340,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
     @WorkerThread
     private void performCopy(Context context, MediaEntry src, File dst, boolean deleteAfter) throws IOException {
         dst = checkDuplicate(dst);
-        InputStream in = new FileInputStream(src.data());
+        InputStream in = new FileInputStream(src.getData());
         OutputStream out = new FileOutputStream(dst);
         byte[] buf = new byte[1024];
         int len;
@@ -355,13 +356,13 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
             if (src.isVideo()) {
                 values.put(MediaStore.Video.VideoColumns.DATA, dst.getAbsolutePath());
                 r.update(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values,
-                        MediaStore.Video.VideoColumns.DATA + " = ?", new String[]{src.data()});
+                        MediaStore.Video.VideoColumns.DATA + " = ?", new String[]{src.getData()});
             } else {
                 values.put(MediaStore.Images.ImageColumns.DATA, dst.getAbsolutePath());
                 r.update(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values,
-                        MediaStore.Images.ImageColumns.DATA + " = ?", new String[]{src.data()});
+                        MediaStore.Images.ImageColumns.DATA + " = ?", new String[]{src.getData()});
             }
-            new File(src.data()).delete();
+            new File(src.getData()).delete();
         } else {
             Log.i("UpdateMediaDatabase", "Scanning " + dst.getPath());
             MediaScannerConnection.scanFile(context,
@@ -432,12 +433,11 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                     if (!mDialog.isShowing()) {
                         break;
                     }
-                    final File fi = new File(p.data());
+                    final File fi = new File(p.getData());
                     final File newFi = new File(destDir, fi.getName());
                     try {
                         performCopy(mContext, p, newFi, deleteAfter);
                     } catch (final IOException e) {
-                        e.printStackTrace();
                         mContext.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -526,7 +526,7 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                 return true;
             case R.id.edit:
                 try {
-                    Uri uri = Uri.fromFile(new File(mMediaEntries.get(0).data()));
+                    Uri uri = Uri.fromFile(new File(mMediaEntries.get(0).getData()));
                     mContext.startActivity(new Intent(Intent.ACTION_EDIT)
                             .setDataAndType(uri, "image/*"));
                     finish();
@@ -546,9 +546,9 @@ public class MediaCab implements Serializable, MaterialCab.Callback {
                 return true;
             case R.id.details:
                 final MediaEntry entry = mMediaEntries.get(0);
-                final File file = new File(entry.data());
+                final File file = new File(entry.getData());
                 Calendar cal = new GregorianCalendar();
-                cal.setTimeInMillis(entry.dateTaken());
+                cal.setTimeInMillis(entry.getDateTaken());
                 new MaterialDialog.Builder(mContext)
                         .title(R.string.details)
                         .content(Html.fromHtml(mContext.getString(R.string.details_contents,
