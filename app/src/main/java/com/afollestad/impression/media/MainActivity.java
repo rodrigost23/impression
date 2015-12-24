@@ -562,7 +562,7 @@ public class MainActivity extends ThemedActivity
                 .title(getString(R.string.about_dialog_title, BuildConfig.VERSION_NAME))
                 .positiveText(R.string.dismiss)
                 .content(Html.fromHtml(getString(R.string.about_body)))
-                .iconRes(R.drawable.ic_launcher)
+                .iconRes(R.mipmap.ic_launcher)
                 .linkColor(accentColor())
                 .show();
     }
