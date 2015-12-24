@@ -122,7 +122,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
             // Sets color of entry in the system recents page
             ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(
                     getString(R.string.app_name),
-                    BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
+                    BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
                     primaryColor());
             setTaskDescription(td);
         }
