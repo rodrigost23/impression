@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
@@ -52,6 +53,7 @@ import com.afollestad.impression.api.MediaEntry;
 import com.afollestad.impression.base.ThemedActivity;
 import com.afollestad.impression.media.CurrentMediaEntriesSingleton;
 import com.afollestad.impression.media.MainActivity;
+import com.afollestad.impression.media.MediaAdapter;
 import com.afollestad.impression.providers.SortMemoryProvider;
 import com.afollestad.impression.utils.PrefUtils;
 import com.afollestad.impression.utils.ScrimUtil;
@@ -109,6 +111,9 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
     private View mBottomScrim;
 
     private AnimatorSet mUiAnimatorSet;
+
+    private int mWidth = -1;
+    private int mHeight = -1;
 
     private ViewPager.OnPageChangeListener mPagerListener = new ViewPager.OnPageChangeListener() {
 
@@ -466,9 +471,12 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
             if (path == null) return;
         }
 
+        mWidth = getIntent().getIntExtra(EXTRA_WIDTH, mWidth);
+        mHeight = getIntent().getIntExtra(EXTRA_HEIGHT, mHeight);
+
         mAdapter = new ViewerPagerAdapter(this, getFragmentManager(),
-                getIntent().getIntExtra(EXTRA_WIDTH, -1),
-                getIntent().getIntExtra(EXTRA_HEIGHT, -1),
+                mWidth,
+                mHeight,
                 mCurrentPosition,
                 SortMemoryProvider.getSortMode(this, path));
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -539,8 +547,9 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
                     path = null;
                 } else {
                     final File file = new File(path);
-                    //TODO
-                    final List<MediaEntry> brothers = null/*Utils.getEntriesFromFolder(this, file.getParentFile(), false, false, MediaAdapter.FileFilterMode.FILTER_ALL)*/;
+                    mWidth = BitmapDrawable.createFromPath(file.getAbsolutePath()).getIntrinsicWidth();
+                    mHeight = BitmapDrawable.createFromPath(file.getAbsolutePath()).getIntrinsicHeight();
+                    final List<MediaEntry> brothers = Utils.getEntriesFromFolder(this, file.getParentFile(), MediaAdapter.FILTER_ALL);
                     entries.addAll(brothers);
                     for (int i = 0; i < brothers.size(); i++) {
                         if (brothers.get(i).getData().equals(file.getAbsolutePath())) {
@@ -565,8 +574,9 @@ public class ViewerActivity extends ThemedActivity implements SlideshowInitDialo
                     // @author Viswanath Lekshmanan
                     // #282 Fix to load all other photos in the same album when loading using URI
                     final File file = new File(tempPath);
-                    //TODO
-                    final List<MediaEntry> brothers = null/*Utils.getEntriesFromFolder(this, file.getParentFile(), false, false, MediaAdapter.FileFilterMode.FILTER_ALL)*/;
+                    mWidth = BitmapDrawable.createFromPath(file.getAbsolutePath()).getIntrinsicWidth();
+                    mHeight = BitmapDrawable.createFromPath(file.getAbsolutePath()).getIntrinsicHeight();
+                    final List<MediaEntry> brothers = Utils.getEntriesFromFolder(this, file.getParentFile(), MediaAdapter.FILTER_ALL);
                     entries.addAll(brothers);
                     for (int i = 0; i < brothers.size(); i++) {
                         if (brothers.get(i).getData().equals(file.getAbsolutePath())) {
