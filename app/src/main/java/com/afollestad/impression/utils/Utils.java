@@ -156,9 +156,9 @@ public abstract class Utils {
                     if (ExcludedFolderProvider.contains(context, fi.getAbsolutePath())) {
                         continue;
                     }
-
-                    results.add(new LocalExplorerFolderEntry(fi));
                 }
+
+                results.add(new LocalExplorerFolderEntry(fi));
             }
         }
         return results;
