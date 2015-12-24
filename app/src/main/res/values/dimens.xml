@@ -35,4 +35,6 @@
 
     <dimen name="viewer_overlay_padding">0dp</dimen>
 
+    <dimen name="viewer_overlay_padding">0dp</dimen>
+
 </resources>
