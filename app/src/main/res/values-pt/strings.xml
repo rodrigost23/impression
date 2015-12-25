@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Impression</string>
+    <string name="about">Sobre</string>
+    <string name="about_desc">Sobre o aplicativo, seu desenvolvedor, seus contribuintes, etc.</string>
+    <string name="about_dialog_title">Impression %1$s</string>
+    <string name="accent_color">Cor de destaque</string>
+    <string name="accent_color_desc">Aplica uma cor de destaque</string>
+    <string name="accounts">Contas</string>
+    <string name="add">Adicionar</string>
+    <string name="add_account">Adicionar uma conta…</string>
+    <string name="all">Tudo</string>
+    <string name="autofix">Correção automática</string>
+    <string name="back">Voltar</string>
+    <string name="behavior">Comportamento</string>
+    <string name="brightness">Brilho</string>
+    <string name="choose">Escolher</string>
+    <string name="choose_album">Escolha um álbum…</string>
+    <string name="colored_navbar">Barra de navegação colorida</string>
+    <string name="colored_navbar_desc">Aplica a cor primária à barra de navegação</string>
+    <string name="contrast">Contraste</string>
+    <string name="copy_to">Copiar para…</string>
+    <string name="copying">Copiando…</string>
+    <string name="crop">Cortar</string>
+    <string name="crossprocess">Processo Cruzado</string>
+    <string name="dark_mode">Modo escuro</string>
+    <string name="dark_mode_desc">Aplica um fundo escuro ao aplicativo</string>
+    <string name="delete">Excluir</string>
+    <string name="delete_bulk_confirm">Tem certeza de que deseja excluir os itens selecionados?</string>
+    <string name="delete_confirm_photo">Excluir esta foto?</string>
+    <string name="delete_confirm_video">Excluir este vídeo?</string>
+    <string name="deleting">Excluindo…</string>
+    <string name="details">Detalhes</string>
+    <string name="device_folders">Pastas do dispositivo</string>
+    <string name="dismiss">Dispensar</string>
+    <string name="documentary">Documentário</string>
+    <string name="done">Pronto</string>
+    <string name="draw">Desenhar</string>
+    <string name="dropbox">Dropbox</string>
+    <string name="duotone">Dois Tons</string>
+    <string name="edit">Editar</string>
+    <string name="empty">vazio</string>
+    <string name="error">Erro</string>
+    <string name="exclude">Ignorar</string>
+    <string name="exclude_prompt">Ignorar %1$d álbuns?</string>
+    <string name="exclude_prompt_single">Ignorar o álbum selecionado?</string>
+    <string name="excluded_folders">Pastas ignoradas</string>
+    <string name="excluded_folders_desc">Editar as pastas que não serão mostradas no aplicativo.</string>
+    <string name="excluding">Ignorando…</string>
+    <string name="explorer_mode">Modo explorador</string>
+    <string name="filllight">Preencher Luz</string>
+    <string name="filter">Filtro</string>
+    <string name="filtering_photos">Filtrar: Fotos</string>
+    <string name="filtering_videos">Filtrar: Vídeos</string>
+    <string name="filters">Filtros</string>
+    <string name="fisheye">Olho de Peixe</string>
+    <string name="five_num">5</string>
+    <string name="flip">Espelhar</string>
+    <string name="flip_horizontal">Espelhar horizontalmente</string>
+    <string name="flip_vertical">Espelhar verticalmente</string>
+    <string name="folder">Pasta</string>
+    <string name="four_num">4</string>
+    <string name="go_up">Subir…</string>
+    <string name="google_drive">Google Drive</string>
+    <string name="google_photos">Google Fotos (Picasa)</string>
+    <string name="grain">Granulado</string>
+    <string name="grayscale">Preto e Branco</string>
+    <string name="grid_size">Colunas</string>
+    <string name="impression_editor">Editor Impression (Prévia)</string>
+    <string name="include_folder">Incluir uma pasta…</string>
+    <string name="include_subfolders">Incluir subpastas</string>
+    <string name="include_subfolders_desc">Ignora subpastas de pastas ignoradas</string>
+    <string name="include_subfolders_included_desc">Mostra subpastas de pastas incluídas</string>
+    <string name="included_folders">Pastas incluídas</string>
+    <string name="info">Info</string>
+    <string name="internal_storage">Armazenamento interno</string>
+    <string name="invalid_file_path_error">Este arquivo não existe ou o Impression não tem permissão de acessá-lo.</string>
+    <string name="local">Local</string>
+    <string name="lomoish">Lomografia</string>
+    <string name="modified_asc">Data: Antigos primeiro</string>
+    <string name="modified_desc">Data: Novos primeiro</string>
+    <string name="move_to">Mover para…</string>
+    <string name="moving">Movendo…</string>
+    <string name="name_asc">Nome: A a Z</string>
+    <string name="name_desc">Nome: Z a A</string>
+    <string name="navigation_drawer_close">Fechar painel de navegação</string>
+    <string name="navigation_drawer_open">Abrir painel de navegação</string>
+    <string name="negative">Negativo</string>
+    <string name="no">Não</string>
+    <string name="no_app_complete_action">Nenhum aplicativo que pudesse completar esta ação foi encontrado…</string>
+    <string name="no_excluded_folders">Nenhuma pasta foi ignorada.</string>
+    <string name="no_photos">Não há fotos aqui!</string>
+    <string name="no_photosorvideos">Não há fotos ou vídeos aqui!</string>
+    <string name="no_videos">Não há vídeos aqui!</string>
+    <string name="one_album">1 álbum</string>
+    <string name="one_folder">1 pasta</string>
+    <string name="one_num">1</string>
+    <string name="one_photo">1 foto</string>
+    <string name="one_video">1 vídeo</string>
+    <string name="only_available_api21">Este recurso só está disponível a partir do Android 5.0</string>
+    <string name="open_permission_error">O Impression não tem permissão para acessar a mídia solicitada.</string>
+    <string name="overview">Visão geral</string>
+    <string name="overview_display">Modo todas as mídias</string>
+    <string name="overview_mode_desc">Mostra uma lista contínua de todas as mídias em vez de álbuns</string>
+    <string name="permission_needed">Permissão necessária</string>
+    <string name="permission_needed_desc">É preciso ter permissão de acesso ao armazenamento do seu dispositivo para ver e salvar imagens! O Impression será fechado.</string>
+    <string name="photos">Fotos</string>
+    <string name="pick_something">Escolha algo…</string>
+    <string name="posterize">Posterizar</string>
+    <string name="primary_color">Cor primária</string>
+    <string name="primary_color_desc">Aplica uma cor primária no tema</string>
+    <string name="print">Imprimir</string>
+    <string name="remember_for_directory">Lembrar para diretório</string>
+    <string name="root">Root</string>
+    <string name="rotate">Girar</string>
+    <string name="rotate_left">Girar para a esquerda</string>
+    <string name="rotate_right">Girar para a direita</string>
+    <string name="saturate">Saturação</string>
+    <string name="save">Salvar</string>
+    <string name="selectAll">Selecionar tudo</string>
+    <string name="sepia">Sépia</string>
+    <string name="set_as">Definir como…</string>
+    <string name="settings">Configurações</string>
+    <string name="share">Compartilhar</string>
+    <string name="share_using">Compartilhar usando…</string>
+    <string name="sharpen">Nitidez</string>
+    <string name="six_num">6</string>
+    <string name="slideshow">Apresentação</string>
+    <string name="slideshow_loop">Apresentação em loop</string>
+    <string name="slideshow_seeklabel">%1$d segundos entre cada slide</string>
+    <string name="slideshow_seeklabel_single">1 segundo entre cada slide</string>
+    <string name="sort">Ordenar</string>
+    <string name="start">Começar</string>
+    <string name="temperature">Temperatura</string>
+    <string name="theme">Tema</string>
+    <string name="three_num">3</string>
+    <string name="tint">Tingir</string>
+    <string name="toolbar_stats">Número na barra de ferramentas</string>
+    <string name="toolbar_stats_desc">Mostra a quantidade de fotos e vídeos em uma pasta na barra de ferramentas</string>
+    <string name="two_num">2</string>
+    <string name="video">VÍDEO</string>
+    <string name="videos">Vídeos</string>
+    <string name="view_mode">Modo de visualização</string>
+    <string name="vignette">Vinheta</string>
+    <string name="x_albums">%1$d álbuns</string>
+    <string name="x_folders">%1$d pastas</string>
+    <string name="x_photos">%1$d fotos</string>
+    <string name="x_videos">%1$d vídeos</string>
+    <string name="yes">Sim</string><string name="about_body"><![CDATA[
+        <b>Impression</b>, uma bela galeria desenvolvida por:<br/><br/>
+
+        <b>Aidan Follestad</b><br/>
+        <a href=\'http://aidanfollestad.com\'>Website</a>&nbsp;&nbsp;
+        <a href=\'https://twitter.com/afollestad\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://google.com/+AidanFollestad\'>Google+</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a><br/><br/>
+
+        <b>Daniel Ciao</b><br/>
+        <a href=\'http://pluscubed.com\'>Website</a>&nbsp;&nbsp;
+        <a href=\'https://twitter.com/plusCubed\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://google.com/+DanielCiao\'>Google+</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/pluscubed\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/dciao\'>LinkedIn</a><br/><br/>
+
+        <b>Marlon Jones</b><br/>
+        <a href=\'https://twitter.com/VirusThePanda\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://www.google.com/+MarlonJones\'>Google+</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/VirusThePanda\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/marlon-jones-11281510b\'>LinkedIn</a><br/><br/>
+
+        <a href=\'https://github.com/afollestad/impression\'>GitHub</a> - código-fonte, bugs, sugestões<br/>
+        <a href=\'https://plus.google.com/communities/103090123257670799691\'>Comunidade no G+</a> - discussões, atualizações<br/><br/>
+
+        Ícone do launcher e gráfico de recursos do Google Play feitos por <a href=\'https://plus.google.com/112332148992467376978\'>Александр Карпилович</a>.
+    ]]></string><string name="confirm_exclude_album"><![CDATA[
+        Ignorar a pasta <b>%1$s</b>?
+    ]]></string><string name="confirm_exclude_album_remove"><![CDATA[
+        Remover <b>%1$s</b> das suas pastas ignoradas?
+    ]]></string><string name="confirm_folder_remove"><![CDATA[
+        Remover a pasta incluída <b>%1$s</b>?
+    ]]></string><string name="details_contents"><![CDATA[
+        <b>Criado em:</b>&nbsp;&nbsp;%1$s<br/>
+        <b>Dimensões:</b>&nbsp;&nbsp;%2$s<br/>
+        <b>Nome do arquivo:</b>&nbsp;&nbsp;%3$s<br/>
+        <b>Tamanho do arquivo:</b>&nbsp;&nbsp;%4$s<br/>
+        <b>Caminho do arquivo:</b>&nbsp;&nbsp;%5$s
+    ]]></string>
+</resources>
